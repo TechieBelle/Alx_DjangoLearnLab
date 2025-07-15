@@ -1,5 +1,5 @@
 # RETRIEVE Operation
-
+from bookshelf.models import Book
 ```python
 # Retrieve the created book
 retrieved_book = Book.objects.get(id=book.id)

@@ -1,7 +1,7 @@
 # CREATE Operation
 
 ```python
-from your_app_name.models import Book
+from bookshelf.models import Book
 
 # Create a book instance
 book = Book.objects.create(
