@@ -18,4 +18,4 @@ class LibraryDetailView(DetailView):
      template_name = 'relationship_app/library_detail.html'
      context_object_name = 'library'
 
-   
+   #User authentication views
