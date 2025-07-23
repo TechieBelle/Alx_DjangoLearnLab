@@ -38,7 +38,8 @@ def register(request):
 def check_role(user, role):
     return hasattr(user, 'userprofile') and user.userprofile.role == role
 
-def admin_check(user): return check_role(user, 'Admin')
+def admin_check(user):
+    return hasattr(user, 'userprofile') and user.userprofile.role == 'Admin'
 def librarian_check(user): return check_role(user, 'Librarian')
 def member_check(user): return check_role(user, 'Member')
 
