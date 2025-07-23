@@ -4,9 +4,8 @@ from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse_lazy
 from django.contrib.auth import login
 from django.views.generic.detail import DetailView
-from . models import Book, Author, Librarian
-from .models import Library
-
+from . models import Book, Author, Librarian, Library, UserProfile
+from django.contrib.auth.decorators import user_passes_test
 
 # Create your views here.
 def list_books(request):
@@ -33,3 +32,24 @@ def register(request):
     else:
         form = UserCreationForm()
     return render(request, 'relationship_app/register.html', {'form': form})
+
+
+# Function to check user roles
+def check_role(user, role):
+    return hasattr(user, 'userprofile') and user.userprofile.role == role
+
+def admin_check(user): return check_role(user, 'Admin')
+def librarian_check(user): return check_role(user, 'Librarian')
+def member_check(user): return check_role(user, 'Member')
+
+@user_passes_test(admin_check)
+def admin_view(request):
+    return render(request, 'relationship_app/admin_view.html')
+
+@user_passes_test(librarian_check)
+def librarian_view(request):
+    return render(request, 'relationship_app/librarian_view.html')
+
+@user_passes_test(member_check)
+def member_view(request):
+    return render(request, 'relationship_app/member_view.html')
