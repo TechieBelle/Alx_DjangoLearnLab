@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic.edit import FormView
 from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse_lazy
@@ -23,12 +23,13 @@ class LibraryDetailView(DetailView):
      context_object_name = 'library'
 
   
-class RegisterView(FormView):
-    template_name = 'relationship_app/register.html'
-    form_class = UserCreationForm
-    success_url = reverse_lazy('home')  # change 'home' as appropriate
-
-    def form_valid(self, form):
-        user = form.save()
-        login(self.request, user)
-        return super().form_valid(form)
+def register(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect('home')
+    else:
+        form = UserCreationForm()
+    return render(request, 'relationship_app/register.html', {'form': form})
