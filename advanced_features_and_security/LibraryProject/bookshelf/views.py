@@ -1,12 +1,12 @@
 from django.shortcuts import render,redirect, get_object_or_404
-from django.contrib.auth.decorators import permission_required
-from django.contrib.auth.decorators import user_passes_test, login_required
+from django.contrib.auth.decorators import permission_required,user_passes_test, login_required
+
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 from django.views.generic.detail import DetailView
-from .models import Book, Author
-from .models import Library
-from .forms import BookForm # Assuming you have a form for Book model
+from .models import Book, Author, Library
+from .forms import BookForm # ✅ Importing BookForm
+from .forms import  ExampleForm  # ✅ Added ExampleForm for secure user input handling
 
 # Function-based view: List all books
 def book_list(request):
@@ -89,3 +89,13 @@ def delete_book(request, pk):
         book.delete()
         return redirect('list_books')
     return render(request, 'bookshelf/confirm_delete.html', {'book': book})
+
+
+
+def example_search_view(request):
+    form = ExampleForm(request.GET or None)
+    books = []
+    if form.is_valid():
+        query = form.cleaned_data['query']
+        books = Book.objects.filter(title__icontains=query)
+    return render(request, 'bookshelf/form_example.html', {'form': form, 'books': books})

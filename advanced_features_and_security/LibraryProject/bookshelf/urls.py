@@ -20,4 +20,6 @@ urlpatterns = [
      path('add_book/', views.add_book, name='add_book'),
     path('edit_book/<int:pk>/', views.edit_book, name='edit_book'),
     path('book_delete/<int:pk>/', views.delete_book, name='delete_book'),
+
+     path('example-search/', views.example_search_view, name='example_search'),
 ]
