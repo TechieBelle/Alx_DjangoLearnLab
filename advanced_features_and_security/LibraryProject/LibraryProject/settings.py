@@ -136,3 +136,24 @@ SECURE_CONTENT_TYPE_NOSNIFF = True  # Stop MIME type sniffing
 CSRF_COOKIE_SECURE = True  # CSRF cookie only over HTTPS
 SESSION_COOKIE_SECURE = True  # Session cookie only over HTTPS
 SECURE_SSL_REDIRECT = True  # ✅ Redirect all HTTP traffic to HTTPS
+SECURE_HSTS_SECONDS = 3600  # Enable HTTP Strict Transport Security
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True  # Apply HSTS to all subdomains
+SECURE_HSTS_PRELOAD = True  # Preload HSTS in browsers
+# Enable X-Content-Type-Options header
+SECURE_CONTENT_TYPE_NOSNIFF = True  # Prevent MIME type sniffing
+# Enable X-Frame-Options header
+X_FRAME_OPTIONS = 'DENY'  # Prevent clickjacking
+# Enable X-XSS-Protection header
+SECURE_BROWSER_XSS_FILTER = True  # Enable browser XSS filter   
+# Enable X-Content-Type-Options header
+SECURE_CONTENT_TYPE_NOSNIFF = True  # Prevent MIME type sniffing
+# Enable X-Frame-Options header
+X_FRAME_OPTIONS = 'DENY'  # Prevent clickjacking
+# Enable X-XSS-Protection header
+SECURE_BROWSER_XSS_FILTER = True  # Enable browser XSS filter
+# Enable Content Security Policy (CSP)
+SECURE_CSP = True  # Enable Content Security Policy
+# Enable Referrer Policy
+SECURE_REFERRER_POLICY = 'no-referrer-when-downgrade'  # Set referrer policy
+
+
