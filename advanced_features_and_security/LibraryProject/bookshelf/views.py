@@ -59,7 +59,7 @@ def member_view(request):
     return render(request, 'bookshelf/member_view.html')
 
 # Task 4:
-@permission_required('bookshelf.can_add_book')
+@permission_required('bookshelf.can_add_book', raise_exception=True)
 def add_book(request):
     if request.method == 'POST':
         form = BookForm(request.POST)
@@ -70,7 +70,7 @@ def add_book(request):
         form = BookForm()
     return render(request, 'bookshelf/book_form.html', {'form': form, 'action': 'Add'})
 
-@permission_required('bookshelf.can_change_book')
+@permission_required('bookshelf.can_change_book', raise_exception=True)
 def edit_book(request, pk):
     book = get_object_or_404(Book, pk=pk)
     if request.method == 'POST':
@@ -82,7 +82,7 @@ def edit_book(request, pk):
         form = BookForm(instance=book)
     return render(request, 'bookshelf/book_form.html', {'form': form, 'action': 'Edit'})
 
-@permission_required('bookshelf.can_delete_book')
+@permission_required('bookshelf.can_delete_book', raise_exception=True)
 def delete_book(request, pk):
     book = get_object_or_404(Book, pk=pk)
     if request.method == 'POST':
