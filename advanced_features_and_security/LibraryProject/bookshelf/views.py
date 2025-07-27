@@ -1,12 +1,12 @@
 from django.shortcuts import render,redirect, get_object_or_404
 from django.contrib.auth.decorators import permission_required,user_passes_test, login_required
-
+from .forms import  ExampleForm  # Added ExampleForm for secure user input handling
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 from django.views.generic.detail import DetailView
 from .models import Book, Author, Library
-from .forms import BookForm # ✅ Importing BookForm
-from .forms import  ExampleForm  # ✅ Added ExampleForm for secure user input handling
+from .forms import BookForm # Importing BookForm
+
 
 # Function-based view: List all books
 def book_list(request):
