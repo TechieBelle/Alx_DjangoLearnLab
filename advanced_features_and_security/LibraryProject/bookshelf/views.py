@@ -9,7 +9,7 @@ from .models import Library
 from .forms import BookForm # Assuming you have a form for Book model
 
 # Function-based view: List all books
-def list_books(request):
+def books_list(request):
     books = Book.objects.all()  # ✅ Explicit call as required
     return render(request, 'bookshelf/list_books.html', {'books': books})
 
