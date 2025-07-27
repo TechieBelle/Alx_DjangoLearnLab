@@ -11,12 +11,12 @@ from .forms import BookForm # Assuming you have a form for Book model
 # Function-based view: List all books
 def list_books(request):
     books = Book.objects.all()  # ✅ Explicit call as required
-    return render(request, 'relationship_app/list_books.html', {'books': books})
+    return render(request, 'bookshelf/list_books.html', {'books': books})
 
 # Class-based view: Display library details
 class LibraryDetailView(DetailView):
     model = Library
-    template_name = 'relationship_app/library_detail.html'
+    template_name = 'bookshelf/library_detail.html'
     context_object_name = 'library'
 
 
@@ -31,7 +31,7 @@ def register(request):
             return redirect('list_books')
     else:
         form = UserCreationForm()
-    return render(request, 'relationship_app/register.html', {'form': form})
+    return render(request, 'bookshelf/register.html', {'form': form})
 
 # Task 3:
 def is_admin(user):
@@ -46,20 +46,20 @@ def is_member(user):
 @login_required
 @user_passes_test(is_admin)
 def admin_view(request):
-    return render(request, 'relationship_app/admin_view.html')
+    return render(request, 'bookshelf/admin_view.html')
 
 @login_required
 @user_passes_test(is_librarian)
 def librarian_view(request):
-    return render(request, 'relationship_app/librarian_view.html')
+    return render(request, 'bookshelf/librarian_view.html')
 
 @login_required
 @user_passes_test(is_member)
 def member_view(request):
-    return render(request, 'relationship_app/member_view.html')
+    return render(request, 'bookshelf/member_view.html')
 
 # Task 4:
-@permission_required('relationship_app.can_add_book')
+@permission_required('bookshelf.can_add_book')
 def add_book(request):
     if request.method == 'POST':
         form = BookForm(request.POST)
@@ -68,9 +68,9 @@ def add_book(request):
             return redirect('list_books')
     else:
         form = BookForm()
-    return render(request, 'relationship_app/book_form.html', {'form': form, 'action': 'Add'})
+    return render(request, 'bookshelf/book_form.html', {'form': form, 'action': 'Add'})
 
-@permission_required('relationship_app.can_change_book')
+@permission_required('bookshelf.can_change_book')
 def edit_book(request, pk):
     book = get_object_or_404(Book, pk=pk)
     if request.method == 'POST':
@@ -80,12 +80,12 @@ def edit_book(request, pk):
             return redirect('list_books')
     else:
         form = BookForm(instance=book)
-    return render(request, 'relationship_app/book_form.html', {'form': form, 'action': 'Edit'})
+    return render(request, 'bookshelf/book_form.html', {'form': form, 'action': 'Edit'})
 
-@permission_required('relationship_app.can_delete_book')
+@permission_required('bookshelf.can_delete_book')
 def delete_book(request, pk):
     book = get_object_or_404(Book, pk=pk)
     if request.method == 'POST':
         book.delete()
         return redirect('list_books')
-    return render(request, 'relationship_app/confirm_delete.html', {'book': book})
+    return render(request, 'bookshelf/confirm_delete.html', {'book': book})
