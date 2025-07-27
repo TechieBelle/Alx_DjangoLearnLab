@@ -83,6 +83,6 @@ class CustomUser(AbstractUser):
     REQUIRED_FIELDS = []
 
 
-    objects = UserManager()
+    objects = CustomUserManager()
 
 
