@@ -128,8 +128,11 @@ LOGOUT_REDIRECT_URL = 'login'
 AUTH_USER_MODEL = 'bookshelf.CustomUser' 
 
 # ✅ SECURITY BEST PRACTICES CONFIGURATION
-SECURE_BROWSER_XSS_FILTER = True
-X_FRAME_OPTIONS = 'DENY'
-SECURE_CONTENT_TYPE_NOSNIFF = True
-CSRF_COOKIE_SECURE = True
-SESSION_COOKIE_SECURE = True
+
+SECURE_BROWSER_XSS_FILTER = True  # Prevent XSS in supported browsers
+X_FRAME_OPTIONS = 'DENY'  # Prevent clickjacking
+SECURE_CONTENT_TYPE_NOSNIFF = True  # Stop MIME type sniffing
+
+CSRF_COOKIE_SECURE = True  # CSRF cookie only over HTTPS
+SESSION_COOKIE_SECURE = True  # Session cookie only over HTTPS
+SECURE_SSL_REDIRECT = True  # ✅ Redirect all HTTP traffic to HTTPS
