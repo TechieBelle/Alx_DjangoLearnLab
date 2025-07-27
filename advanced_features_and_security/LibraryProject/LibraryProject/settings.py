@@ -155,5 +155,8 @@ SECURE_BROWSER_XSS_FILTER = True  # Enable browser XSS filter
 SECURE_CSP = True  # Enable Content Security Policy
 # Enable Referrer Policy
 SECURE_REFERRER_POLICY = 'no-referrer-when-downgrade'  # Set referrer policy
+# ✅ Security settings for SSL and Proxy headers
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
 
 
