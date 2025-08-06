@@ -1,6 +1,5 @@
 from django.db import models
 
-
 # This file defines the data models for the API project.
 class Author(models.Model):
     name = models.CharField(max_length=100)
