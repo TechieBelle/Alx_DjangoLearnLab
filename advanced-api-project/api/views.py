@@ -15,6 +15,8 @@ class BookListView(generics.ListAPIView):
    serializer_class = BookSerializer
    filter_backends = [filters.SearchFilter]  # Can also combine with filtering
    search_fields = ['author', 'publication_year'] # Fields to search in
+   filter_backends = [filters.OrderingFilter]
+   ordering_fields = ['title', 'publication_year']  # Fields to order by
  
 # A DetailView for retrieving a single book by ID.
 class BookDetailView(generics.RetrieveAPIView):
