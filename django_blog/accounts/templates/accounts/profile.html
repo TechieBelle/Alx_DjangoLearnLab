@@ -1,0 +1,22 @@
+{% extends "accounts/base.html" %}
+{% block title %}Your Profile{% endblock %}
+{% block content %}
+<h1>Your Profile</h1>
+
+<form method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  <fieldset>
+    <legend>Account</legend>
+    {{ u_form.as_p }}
+  </fieldset>
+  <fieldset>
+    <legend>Profile</legend>
+    {{ p_form.as_p }}
+    {% if request.user.profile.image %}
+      <p>Current photo:</p>
+      <img src="{{ request.user.profile.image.url }}" alt="Profile image" style="max-width:150px;">
+    {% endif %}
+  </fieldset>
+  <button type="submit">Save changes</button>
+</form>
+{% endblock %}

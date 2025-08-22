@@ -1,9 +1,9 @@
-{% extends 'blog/base.html' %}
+{% extends 'accounts/base.html' %}
 
-
+{% block title %}Login{% endblock %}
 {% block content %}
 <div class="container">
-    <h2>Log In</h2>
+    <h2>Login</h2>
     <form method="post" class="form-login">
         {% csrf_token %}
         {{ form}}
