@@ -9,12 +9,6 @@ body {
     font-family: Arial, sans-serif;
     background-color: #f9f9f9;
     color: #333;
-    /* overflow: hidden; */
-}
-.container{
-    min-height: 100vh;
-    background-color: rgb(205, 205, 205);
-   
 }
 
 header {
@@ -43,10 +37,9 @@ header nav ul li a {
 }
 
 footer {
-    position: fixed;
     text-align: center;
     margin-top: 50px;
     padding: 10px;
     background-color: #333;
-    color: rgb(123, 24, 24);
+    color: white;
 }
