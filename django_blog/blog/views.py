@@ -1,75 +1,45 @@
-from .models import User
-from django.views.generic import TemplateView, View, CreateView
-from django.contrib.auth.views import LoginView, LogoutView
-from django.views.generic.edit import FormView
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth import login
+from django.contrib.auth import login,logout
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, redirect
+from django.views.generic.edit import CreateView
 from django.urls import reverse_lazy
+from .forms import RegisterForm, UserUpdateForm, ProfileForm
+from django.views.generic import TemplateView
 
 
 class Index(TemplateView):
-    template_name = 'blog/index.html'
-
-
-class LoginView(LoginView):
-    template_name = 'blog/registration/login.html'
-    redirect_authenticated_user = True
-
-
-class LogoutView(LogoutView):
-    template_name = 'blog/registration/logout.html'
-    redirect_authenticated_user = True
-
+    template_name = 'blog/index.html'   
 
 
 class RegisterView(CreateView):
-        template_name = 'blog/registration/register.html'
-        form_class = UserCreationForm
-        success_url = reverse_lazy("login")
-        def form_valid(self, form):
-             user = form.save()
-             login(self.request, user)
-             return super().form_valid(form)    
-        
+    template_name = "accounts/register.html"
+    form_class = RegisterForm
+    success_url = reverse_lazy("profile")
 
-class ProfileView(View):
-   template_name = 'blog/profile.html'
-    # def get_success_url(self):
-    #     return self.request.GET.get('next', 'home')
+    def form_valid(self, form):
+        user = form.save()          # creates the User (Profile is auto-created by signal)
+        login(self.request, user)   # log them in immediately
+        return super().form_valid(form)
+    
 
-# def register_view(request):   
-#     if request.method == 'POST':
-#         form = RegisterForm(request.POST)
-#         if form.is_valid():
-#             username = form.cleaned_data.get('username')
-#             password = form.cleaned_data.get('password')
-#             user = User.objects.create_user(username=username, password=password)
-#             login(request, user)
-#             return redirect('home')
-#     else:
-#         form = RegisterForm()
-#         return render(request, 'registration/register.html', {'form': form})
+@login_required
+def profile_view(request):
+    if request.method == "POST":
+        u_form = UserUpdateForm(request.POST, instance=request.user)
+        p_form = ProfileForm(request.POST, request.FILES, instance=request.user.profile)
+        if u_form.is_valid() and p_form.is_valid():
+            u_form.save()
+            p_form.save()
+            return redirect("profile")
+    else:
+        u_form = UserUpdateForm(instance=request.user)
+        p_form = ProfileForm(instance=request.user.profile)
 
-# def login_view(request):
-#     if request.method == 'POST':
-#         username = request.POST.get('username')
-#         password = request.POST.get('password')
-#         user = authenticate(request, username=username, password=password)
-#         if user is not None:
-#             login(request, user)
-#             return redirect('home')
-#         else:
-#             error_message = 'Invalid credentials!'
-#     return render(request, 'registration/login.html',{'error_message': error_message})
+    return render(request, "accounts/profile.html", {"u_form": u_form, "p_form": p_form})
 
 
 
-# def logout_view(request):
-#     if request.method == 'POST':
-#         logout(request)
-#         return redirect('login')
-#     else:
-#         return redirect('home')
+
 
 
 

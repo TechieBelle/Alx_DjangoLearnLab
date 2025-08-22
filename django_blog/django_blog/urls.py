@@ -5,7 +5,7 @@ from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     # Registration & profile from our app
-    path("", include("accounts.urls")),   # register, profile
+    path("", include("blog.urls")),   # register, profile
     path('admin/', admin.site.urls),
     # path('', include('blog.urls')),  # Include the blog app's URLs
     
