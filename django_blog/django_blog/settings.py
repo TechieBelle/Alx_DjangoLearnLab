@@ -17,7 +17,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-$t_8(24h!i2q%8l11s3f4z&i7x511*qm1jxqe8sb!&b+b8*l3t'
+SECRET_KEY = os.getenv("SECRET_KEY", "fallback-secret")
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -34,8 +35,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'blog',  # Custom app for the blog    
+    'blog',  # Custom app for the blog   
+
 ]
+
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -118,9 +122,14 @@ USE_TZ = True
 # In settings.py
 STATIC_URL = '/static/'
 
+# Project-level static folder (optional but recommended)
 STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
+
+# STATICFILES_DIRS = (
+#     os.path.join(BASE_DIR, 'static'),  # Project-level static folder
+# )
 
 
 
@@ -128,3 +137,7 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# LOGIN_REDIRECT_URL = "home" 
+# LOGOUT_REDIRECT_URL = "/login/"  # Redirect to login page after logout
