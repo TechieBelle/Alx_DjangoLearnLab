@@ -1,8 +1,9 @@
 from django.urls import path, include
 from .import views
-from .views import Index, RegisterView, profile_view
+from .views import IndexView, RegisterView, profile_view
 from django.contrib.auth.views import LogoutView
 from django.contrib.auth import views as auth_views
+from .views import (PostListView, PostDetailView, PostCreateView, PostUpdateView, PostDeleteView,)
 
 urlpatterns = [
      
@@ -10,11 +11,28 @@ urlpatterns = [
     path("profile/", views.profile_view, name="profile"),
     
         # Auth views (login/logout) using Django built-ins
-    path("login/",  auth_views.LoginView.as_view(template_name="accounts/registration/login.html"), name="login"),
+    path("login/",  auth_views.LoginView.as_view(template_name="blog/login.html"), name="login"),
     path(
         "logout/",
         LogoutView.as_view(template_name="accounts/logout.html"),
         name="logout",
     ),
+    path("", IndexView.as_view(), name="home"),
+
+
+# List of all posts
+    path("posts/", PostListView.as_view(), name="post-list"),
+
+    # Create a new post
+    path("posts/new/", PostCreateView.as_view(), name="post-create"),
+
+    # Detail view for a single post
+    path("posts/<int:pk>/", PostDetailView.as_view(), name="post-detail"),
+
+    # Edit an existing post
+    path("posts/<int:pk>/edit/", PostUpdateView.as_view(), name="post-update"),
+
+    # Delete a post
+    path("posts/<int:pk>/delete/", PostDeleteView.as_view(), name="post-delete"),
 
 ]
