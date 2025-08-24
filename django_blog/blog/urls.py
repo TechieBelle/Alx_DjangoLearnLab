@@ -24,15 +24,15 @@ urlpatterns = [
     path("posts/", PostListView.as_view(), name="post-list"),
 
     # Create a new post
-    path("posts/new/", PostCreateView.as_view(), name="post-create"),
+    path("post/new/", PostCreateView.as_view(), name="post-create"),
 
     # Detail view for a single post
-    path("posts/<int:pk>/", PostDetailView.as_view(), name="post-detail"),
+    path("post/<int:pk>/", PostDetailView.as_view(), name="post-detail"),
 
     # Edit an existing post
-    path("posts/<int:pk>/edit/", PostUpdateView.as_view(), name="post-update"),
+    path("post/<int:pk>/edit/", PostUpdateView.as_view(), name="post-update"),
 
     # Delete a post
-    path("posts/<int:pk>/delete/", PostDeleteView.as_view(), name="post-delete"),
+    path("post/<int:pk>/delete/", PostDeleteView.as_view(), name="post-delete"),
 
 ]
